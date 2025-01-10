@@ -11,11 +11,10 @@ const SignUp = () => {
     email: "",
     name: "",
     password: "",
-    country: "",
   });
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -34,16 +33,16 @@ const SignUp = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <div className="max-w-6xl w-full flex bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+    <div className=" dark:bg-gray-900 h-full flex items-center justify-center">
+      <div className="max-w-6xl bg-white w-full flex dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
         {/* Form Section */}
-        <div className="w-1/2 p-8">
-          <h2 className="text-3xl font-semibold text-white">
+        <div className="w-1/2 p-8 py-10">
+          <h2 className="text-3xl font-semibold dark:text-white">
             Create your Account
           </h2>
-          <p className="mt-2 text-gray-900 dark:text-white">
+          <p className="mt-2 text-gray-700 dark:text-white">
             Already have an account?{" "}
-            <a href="/sign-in" className="text-blue-500 hover:underline">
+            <a href="/sign-in" className="font-medium text-primary-600 hover:underline">
               Login here.
             </a>
           </p>
@@ -51,7 +50,7 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm text-gray-900 dark:text-white"
+                className="block text-sm font-medium text-gray-900 dark:text-white"
               >
                 Your email
               </label>
@@ -62,13 +61,14 @@ const SignUp = () => {
                 onChange={handleChange}
                 value={formData.email}
                 placeholder="name@company.com"
-                className="w-full mt-1 px-4 py-2 bg-gray-700 border border-gray-600 text-gray-200 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+
               />
             </div>
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm text-gray-900 dark:text-white"
+                className="block text-sm font-medium text-gray-900 dark:text-white"
               >
                 Full Name
               </label>
@@ -79,34 +79,13 @@ const SignUp = () => {
                 onChange={handleChange}
                 value={formData.name}
                 placeholder="e.g. Bonnie Green"
-                className="w-full mt-1 px-4 py-2 bg-gray-700 border border-gray-600 text-gray-200 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
             <div>
               <label
-                htmlFor="country"
-                className="block text-sm text-gray-900 dark:text-white"
-              >
-                Country
-              </label>
-              <select
-                id="country"
-                className="w-full mt-1 px-4 py-2 bg-gray-700 border border-gray-600 text-gray-200 rounded focus:outline-none focus:ring focus:ring-blue-500"
-                name="country"
-                onChange={handleChange}
-                value={formData.country}
-              >
-                <option value="">Choose a country</option>
-                <option value="United States">United States</option>
-                <option value="India">India</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="Canada">Canada</option>
-              </select>
-            </div>
-            <div>
-              <label
                 htmlFor="password"
-                className="block text-sm text-gray-900 dark:text-white"
+                className="block text-sm font-medium text-gray-900 dark:text-white"
               >
                 Password
               </label>
@@ -117,12 +96,12 @@ const SignUp = () => {
                 onChange={handleChange}
                 value={formData.password}
                 placeholder="••••••••"
-                className="w-full mt-1 px-4 py-2 bg-gray-700 border border-gray-600 text-gray-200 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
-              <p className="text-gray-400 text-sm mt-1">Password must be of atleast 8 characters.</p>
+              <p className="text-gray-900 text-sm mt-1">Password must be of atleast 8 characters.</p>
             </div>
             <div className="mt-4 mb-2">
-              <label className="flex items-center text-gray-400 space-x-2">
+              <label className="flex items-center text-gray-700 space-x-2">
                 <input
                   type="checkbox"
                   className="w-4 h-4 text-blue-500 bg-gray-700 rounded focus:ring focus:ring-blue-500"
@@ -135,7 +114,7 @@ const SignUp = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500"
+              className="w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded focus:outline-none focus:ring focus:ring-blue-500"
             >
               Create an account
             </button>
@@ -146,8 +125,8 @@ const SignUp = () => {
           <Image
             src="/illustration.svg" // Replace this with the actual illustration image
             alt="Illustration"
-            width={500}
-            height={500}
+            width={450}
+            height={450}
             // layout='fill'
           />
         </div>
