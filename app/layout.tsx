@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito,Nunito_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@/contexts/UserContext";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   weight: ['400', '700', '500', '600', '800', '300'],
@@ -38,6 +39,7 @@ export default function RootLayout({
         <UserProvider>
           {children}
         </UserProvider>
+        <Toaster />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import { ID } from "appwrite";
 import { createContext, useContext, useEffect, useState } from "react";
 import { account } from "../lib/appwrite";
+import { toast } from "@/hooks/use-toast";
 
 interface UserContextType {
   current: any | null;
@@ -20,9 +21,12 @@ export function UserProvider(props:any) {
       try {
         const loggedIn = await account.createEmailPasswordSession(email, password);
         setUser(loggedIn);
-        window.location.replace("/");
-      } catch(err) {
-        console.log(err);
+        window.location.replace("/dashboard");
+      } catch(err:any) {
+        // console.log(err);
+        toast({
+          title: err.message
+        })
       }
     }
   
@@ -30,8 +34,11 @@ export function UserProvider(props:any) {
       try {
         await account.deleteSession("current");
         setUser(null);
-      } catch(err) {
+      } catch(err:any) {
         console.log(err);
+        toast({
+          title: err.message
+        })
       }
     }
   
@@ -45,8 +52,10 @@ export function UserProvider(props:any) {
   
         // Login after registration
         await login(email, password);
-      } catch(err) {
-        console.log(err);
+      } catch(err:any) {
+        toast({
+          title: err.message
+        })
       }
     }
   
@@ -61,7 +70,7 @@ export function UserProvider(props:any) {
   
     useEffect(() => {
       init();
-    }, []);
+    }, [user]);
   
     return (
       <UserContext.Provider value={{ current: user, login, logout, register }}>
