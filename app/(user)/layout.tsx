@@ -1,5 +1,6 @@
 'use client'
 
+import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/Sidebar";
 import Topbar from "@/components/Topbar";
 import { useUser } from "@/hooks/useUser";
@@ -14,6 +15,10 @@ const Layout = ({
   const [sidebarHidden, setSidebarHidden] = useState(false)
   const user = useUser()
 
+  if (user?.loading) {
+    return  <LoadingSpinner />
+  }
+  
   if (!user?.current) {
     return redirect("/")
   }

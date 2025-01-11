@@ -53,7 +53,7 @@ const JoinGroupDialog = () => {
         </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
-            <Button type="button" variant="secondary" onClick={handleJoin}>
+            <Button type="button" variant="secondary" className="bg-primary-600 text-white" onClick={handleJoin}>
               Join
             </Button>
           </DialogClose>

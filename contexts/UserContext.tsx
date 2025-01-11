@@ -7,6 +7,7 @@ import { toast } from "@/hooks/use-toast";
 
 interface UserContextType {
   current: any | null;
+  loading:boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   register: (email: string, password: string, name:string) => Promise<void>;
@@ -16,6 +17,7 @@ export const UserContext = createContext<UserContextType | null>(null);
 
 export function UserProvider(props:any) {
     const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(true);
   
     async function login(email:string, password:string) {
       try {
@@ -63,8 +65,10 @@ export function UserProvider(props:any) {
       try {
         const loggedIn = await account.get();
         setUser(loggedIn);
+        setLoading(false)
       } catch (err) {
         setUser(null);
+        setLoading(false)
       }
     }
   
@@ -73,7 +77,7 @@ export function UserProvider(props:any) {
     }, [user]);
   
     return (
-      <UserContext.Provider value={{ current: user, login, logout, register }}>
+      <UserContext.Provider value={{ current: user, loading, login, logout, register }}>
         {props.children}
       </UserContext.Provider>
     );

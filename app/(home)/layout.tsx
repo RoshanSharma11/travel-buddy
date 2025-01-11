@@ -1,5 +1,6 @@
 'use client'
 
+import LoadingSpinner from "@/components/LoadingSpinner";
 import NavBar from "@/components/NavBar";
 import { useUser } from "@/hooks/useUser";
 import { redirect } from "next/navigation";
@@ -11,6 +12,10 @@ export default function Layout({
 }>) {
 
   const user = useUser()
+
+  if (user?.loading) {
+    return  <LoadingSpinner />
+  }
 
   if (user?.current) {
     redirect('/dashboard')

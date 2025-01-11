@@ -53,7 +53,7 @@ const Sidebar = ({ sidebarHidden }: { sidebarHidden: boolean }) => {
                   key={ind}
                   className="flex items-center gap-3 transition py-3 px-2 rounded-md cursor-pointer text-gray-800 hover:bg-primary-600 hover:text-white"
                 >
-                  <item.icon />
+                  <item.icon size={23} />
                   <span className="font-medium text-lg ">{item.label}</span>
                 </Link>
               );
@@ -63,7 +63,7 @@ const Sidebar = ({ sidebarHidden }: { sidebarHidden: boolean }) => {
             className="flex items-center gap-3 transition py-3 px-2 rounded-md cursor-pointer text-gray-800 hover:bg-primary-600 hover:text-white"
             onClick={() => user?.logout()}
           >
-            <LogOut />
+            <LogOut size={23} />
             <span className="font-medium text-lg ">Log Out</span>
           </button>
         </nav>
