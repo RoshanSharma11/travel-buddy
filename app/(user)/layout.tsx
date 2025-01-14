@@ -28,7 +28,7 @@ const Layout = ({
         <Sidebar sidebarHidden={sidebarHidden} />
         <div className="flex-1 flex flex-col">
                 <Topbar setSidebarHidden={setSidebarHidden} />
-            <div className="max-h-full overflow-auto">
+            <div className="max-h-full h-full overflow-auto">
                 {children}
             </div>
         </div>

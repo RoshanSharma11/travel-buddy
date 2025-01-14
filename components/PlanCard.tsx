@@ -46,45 +46,53 @@ const PlanCard = ({
     }
   };
   return (
-    <Link href="/dashboard">
-      <Card
-        className={cn("transition hover:shadow-lg", {
-          "bg-gray-50": previous,
-        })}
-      >
-        <CardHeader>
-          <CardTitle className="text-xl relative">
+    <Card
+      className={cn("transition ", {
+        "bg-gray-50": previous,
+      })}
+    >
+      <CardHeader>
+        <CardTitle className="text-xl relative">
+          <Link
+            href={`/trips/${destination}`}
+            className="hover:text-primary-600 transition"
+          >
             Trip to {destination}
-            {previous || (
-              <button
-                className="absolute -top-1 right-0 p-2 rounded-full hover:bg-slate-100"
-                onClick={() => copyCode("Hello!!")}
-              >
-                <LinkIcon />
-              </button>
-            )}
-          </CardTitle>
-          <CardDescription>
-            Date: {from} - {to}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>{desc}</p>
-        </CardContent>
-        <CardFooter>
-          <h2 className="font-medium">Members: </h2>
-          <ul className="flex items-center gap-1 ml-1 flex-wrap">
-            {members.map((member, index) => (
-              <li key={index}>
-                <Badge className="bg-primary-600 hover:bg-primary-500">
-                  {member}
-                </Badge>
-              </li>
-            ))}
-          </ul>
-        </CardFooter>
-      </Card>
-    </Link>
+          </Link>
+
+          {previous || (
+            <button
+              className="absolute -top-1 right-0 p-2 rounded-full hover:bg-slate-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                copyCode("Hello!!");
+              }}
+            >
+              <LinkIcon />
+            </button>
+          )}
+        </CardTitle>
+
+        <CardDescription>
+          Date: {from} - {to}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>{desc}</p>
+      </CardContent>
+      <CardFooter>
+        <h2 className="font-medium">Members: </h2>
+        <ul className="flex items-center gap-1 ml-1 flex-wrap">
+          {members.map((member, index) => (
+            <li key={index}>
+              <Badge className="bg-primary-600 hover:bg-primary-500">
+                {member}
+              </Badge>
+            </li>
+          ))}
+        </ul>
+      </CardFooter>
+    </Card>
   );
 };
 
