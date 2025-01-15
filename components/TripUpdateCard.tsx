@@ -44,10 +44,10 @@ export const formSchema = z.object({
     message: "Destination must be at least 2 characters.",
   }),
   activities: z.array(z.string()).optional(),
-  budget: z.number().min(1000, {
-    message: "Budget must be at least be ₹1000.",
+  budget: z.string().min(3, {
+    message: "Budget must be at least be $100.",
   }),
-  dateRange: z.object({ from: z.date(), to: z.date() }).optional(),
+  dateRange: z.object({ from: z.date(), to: z.date() }),
   name:z.string().min(3, {message: "Name must be at least 3 characters"})
 });
 
@@ -55,7 +55,7 @@ interface TripUpdateCardProps {
   name?:string;
   destination?: string;
   activities?: string[];
-  budget?: number;
+  budget?: string;
   from?: Date;
   to?: Date;
   buttonText?: string;
@@ -76,7 +76,7 @@ const TripUpdateCard = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       destination: destination || "",
-      budget: budget || 1000,
+      budget: budget || '100',
       activities: activities || [],
       name: name || ""
     },
@@ -95,6 +95,11 @@ const TripUpdateCard = ({
   const [selectedActivities, setSelectedActivities] = useState<string[]>(
     activities || []
   );
+
+  const handleDataChange = (data:any) => {
+    setDate(data);
+    form.setValue('dateRange',data)
+  };
 
   return (
     <>
@@ -245,7 +250,7 @@ const TripUpdateCard = ({
                           mode="range"
                           defaultMonth={date?.from}
                           selected={date}
-                          onSelect={setDate}
+                          onSelect={handleDataChange}
                           numberOfMonths={2}
                         />
                       </PopoverContent>

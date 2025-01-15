@@ -58,7 +58,7 @@ const NavBar = () => {
             </Link>
           </li>
         </SignedOut>
-        <li>
+        {/* <li>
           <SignedIn>
             <button
               className="mx-5 text-gray-700 text-[18px] hover:underline transition-all font-medium"
@@ -74,7 +74,7 @@ const NavBar = () => {
               Dashboard
             </Link>
           </SignedIn>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

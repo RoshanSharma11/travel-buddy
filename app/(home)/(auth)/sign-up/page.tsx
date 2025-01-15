@@ -9,9 +9,11 @@ import { cn } from "@/lib/utils";
 import { useAuth, useSignUp, useUser } from "@clerk/nextjs";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { toast } from "@/hooks/use-toast";
+import { useAxiosClient } from "@/lib/axios-client";
 
 const SignUp = () => {
   // const user = useUser();
+  const axiosClient = useAxiosClient();
   const { isLoaded, signUp, setActive } = useSignUp();
   const auth = useAuth();
   const [formData, setFormData] = useState({
@@ -40,7 +42,7 @@ const SignUp = () => {
       await signUp?.create({
         emailAddress: formData.email,
         password: formData.password,
-        firstName: formData.name,
+        // firstName: formData.name,
       });
 
       // Send the user an email with the verification code
@@ -77,6 +79,23 @@ const SignUp = () => {
       // and redirect the user
       if (signUpAttempt?.status === "complete") {
         await setActive!({ session: signUpAttempt.createdSessionId });
+
+        // const resp = await fetch('https://gpl-project.onrender.com/api/v1/user/create', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({
+        //     email: formData.email,
+        //     name: formData.name,
+        //   })
+        // })
+        const response = await axiosClient.post("/user/create", {
+            email: formData.email,
+            name: formData.name,
+        });
+        console.log(response);
+        
         window.location.replace("/dashboard")
         // router.push("/dashboard");
         // redirect('/dashboard')

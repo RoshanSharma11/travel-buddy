@@ -3,23 +3,27 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/hooks/useUser";
+// import { useUser } from "@/hooks/useUser";
 import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export default function Settings() {
   const [currentUser, setCurrentUser] = useState({
     name: "",
-    phone: "",
     email: "",
   });
-  const auth = useUser();
+  // const auth = useUser();
+  const {isLoaded, user} = useUser()
 
   useEffect(() => {
-    setCurrentUser({
-      phone: auth?.current.phone,
-      email: auth?.current.email,
-      name: auth?.current.name,
-    });
+    if (isLoaded) {
+      console.log(user?.emailAddresses[0].emailAddress);
+      
+      setCurrentUser({
+        email: user?.emailAddresses[0].emailAddress || "",
+        name: user?.fullName || "",
+      });
+    }
   }, []);
 
   return (
@@ -75,22 +79,6 @@ export default function Settings() {
                     }
                     placeholder="Enter your email"
                     type="email"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input
-                    className="h-11"
-                    name="phone"
-                    value={currentUser.phone}
-                    onChange={(e) =>
-                      setCurrentUser((prev) => ({
-                        ...prev,
-                        [e.target.name]: e.target.value,
-                      }))
-                    }
-                    placeholder="Enter your phone"
-                    type="tel"
                   />
                 </div>
               </div>

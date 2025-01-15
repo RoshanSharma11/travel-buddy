@@ -15,13 +15,28 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAxiosClient } from "@/lib/axios-client";
+import { toast } from "@/hooks/use-toast";
 
 const JoinGroupDialog = () => {
   const [code, setCode] = useState('')
+  const axiosClient = useAxiosClient()
 
-  const handleJoin = () => {
-    console.log('Join Group');
-    
+  const handleJoin =  async() => {
+    try {
+      const response = await axiosClient.post(`/travel/${code}/join`);
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Group joined successfully");
+        toast({
+          title: "Group joined successfully.",
+          className: "bg-primary-500 text-white",
+        })
+      }
+    } catch (err) {
+      console.log(err);
+      
+    }
   }
 
   return (

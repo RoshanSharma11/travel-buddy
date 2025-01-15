@@ -22,7 +22,22 @@ interface PlanCardProps {
   desc: string;
   members: string[];
   previous?: boolean;
+  short_id:string;
 }
+
+export const copyCode = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log("Content copied to clipboard");
+    toast({
+      title: "Invite code copied.",
+      description: "Share the code to add more members.",
+      className: "bg-primary-500 text-white",
+    });
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
 
 const PlanCard = ({
   destination,
@@ -31,20 +46,9 @@ const PlanCard = ({
   desc,
   members,
   previous = false,
+  short_id
 }: PlanCardProps) => {
-  const copyCode = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      console.log("Content copied to clipboard");
-      toast({
-        title: "Invite code copied.",
-        description: "Share the code to add more members.",
-        className: "bg-primary-500 text-white",
-      });
-    } catch (err) {
-      console.error("Failed to copy: ", err);
-    }
-  };
+  
   return (
     <Card
       className={cn("transition ", {
@@ -65,7 +69,7 @@ const PlanCard = ({
               className="absolute -top-1 right-0 p-2 rounded-full hover:bg-slate-100"
               onClick={(e) => {
                 e.stopPropagation();
-                copyCode("Hello!!");
+                copyCode(short_id);
               }}
             >
               <LinkIcon />

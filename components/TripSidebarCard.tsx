@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import { ChevronRight, Edit, MapPin } from "lucide-react";
+import { ChevronRight, Edit, LinkIcon, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -24,18 +24,19 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { z } from "zod";
-import TripUpdateCard from "./TripUpdateCard";
+import TripUpdateCard, { formSchema } from "./TripUpdateCard";
+import { copyCode } from "./PlanCard";
 
-const formSchema = z.object({
-  destination: z.string().min(2, {
-    message: "Destination must be at least 2 characters.",
-  }),
-  activities: z.array(z.string()).optional(),
-  budget: z.number().min(1000, {
-    message: "Budget must be at least be ₹1000.",
-  }),
-  dateRange: z.object({ from: z.date(), to: z.date() }).optional(),
-});
+// const formSchema = z.object({
+//   destination: z.string().min(2, {
+//     message: "Destination must be at least 2 characters.",
+//   }),
+//   activities: z.array(z.string()).optional(),
+//   budget: z.string().min(3, {
+//     message: "Budget must be at least be $100.",
+//   }),
+//   dateRange: z.object({ from: z.date(), to: z.date() }).optional(),
+// });
 
 const TripSidebarCard = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -62,6 +63,15 @@ const TripSidebarCard = () => {
                 Kullu, India
               </p>
             </div>
+            <button
+              className="absolute top-2 right-1 p-2 text-white rounded-full hover:bg-primary-600 transition"
+              onClick={(e) => {
+                e.stopPropagation();
+                copyCode("Hello!!");
+              }}
+            >
+              <LinkIcon />
+            </button>
           </div>
         </CardHeader>
         <CardContent>
@@ -217,7 +227,7 @@ const TripSidebarCard = () => {
                         </DialogHeader>
                         <TripUpdateCard
                           destination="Manali"
-                          budget={2500}
+                          budget={'2500'}
                           from={new Date("18 Jan 2025")}
                           to={new Date("25 Feb 2025")}
                           activities={['Skiing','Hiking','Trekking','Street Food Exploration']}
