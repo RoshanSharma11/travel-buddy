@@ -222,6 +222,7 @@ const TripSidebarCard = () => {
                           to={new Date("25 Feb 2025")}
                           activities={['Skiing','Hiking','Trekking','Street Food Exploration']}
                           buttonText="Update"
+                          name="XYZ"
                           onSubmit={onSubmit}
                           />
                       </DialogContent>

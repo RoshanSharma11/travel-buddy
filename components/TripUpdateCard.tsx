@@ -48,9 +48,11 @@ export const formSchema = z.object({
     message: "Budget must be at least be ₹1000.",
   }),
   dateRange: z.object({ from: z.date(), to: z.date() }).optional(),
+  name:z.string().min(3, {message: "Name must be at least 3 characters"})
 });
 
 interface TripUpdateCardProps {
+  name?:string;
   destination?: string;
   activities?: string[];
   budget?: number;
@@ -67,6 +69,7 @@ const TripUpdateCard = ({
   from,
   to,
   buttonText = "Save",
+  name,
   onSubmit,
 }: TripUpdateCardProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -75,6 +78,7 @@ const TripUpdateCard = ({
       destination: destination || "",
       budget: budget || 1000,
       activities: activities || [],
+      name: name || ""
     },
   });
   const today = new Date();
@@ -96,6 +100,24 @@ const TripUpdateCard = ({
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-md">Trip Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your trip name..."
+                    type="text"
+                    {...field}
+                    className="h-11"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="destination"

@@ -1,35 +1,72 @@
 "use client";
 
-import { useUser } from "@/hooks/useUser";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { toast } from "@/hooks/use-toast";
+// import { useUser } from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
-import { redirect } from "next/navigation";
+import { useAuth, useSignIn } from "@clerk/nextjs";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const SignIn = () => {
+  const auth = useAuth();
+  const { isLoaded, signIn, setActive } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signinDisabled, setSigninDisabled] = useState(false);
-  const user = useUser();
+  // const user = useUser();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSigninDisabled(true);
     try {
-      e.preventDefault();
-      setSigninDisabled(true);
-
+      // if (!isLoaded) return
       if (email === "" || password === "") {
         alert("please fill all the required fields");
         return;
       }
-      await user?.login(email, password);
-    } catch (error) {
-      console.log(typeof error);
+      if (isLoaded) {
+        // await user?.login(email, password);
+        const signInAttempt = await signIn?.create({
+          identifier: email,
+          password,
+        });
+        // console.log(signInAttempt);
+
+        if (signInAttempt?.status === "complete") {
+          await setActive!({ session: signInAttempt.createdSessionId });
+          console.log("session activated");
+          window.location.replace("/dashboard")
+
+          // router.push('/dashboard')
+          // return;
+          // redirect('/dashboard')
+        } else {
+          // If the status is not complete, check why. User may need to
+          // complete further steps.
+          // console.error(JSON.stringify(signInAttempt, null, 2))
+          console.log(signInAttempt);
+        }
+      }
+    } catch (error:any) {
+      console.log(error.message);
+      toast({
+        title:error.message,
+        variant:'destructive',
+      })
     } finally {
+      console.log('finally');
       setSigninDisabled(false);
     }
   };
 
-  if (user?.current) {
-    redirect("/");
+  // if (user?.current) {
+  //   redirect("/");
+  // }
+  if (!isLoaded) return <LoadingSpinner />
+  if (auth.isLoaded && auth.userId) {
+    redirect("/dashboard");
   }
 
   return (

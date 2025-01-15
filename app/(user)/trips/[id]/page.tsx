@@ -26,14 +26,14 @@ const Trip = () => {
         <div className="flex-1 flex flex-col gap-2">
           <div className="flex-1 px-4 py-2 max-h-full overflow-auto custom-scrollbar">
             <h1 className="text-2xl font-semibold">Day 1</h1>
-            <Card className="mt-3">
+            <Card className="mt-3 bg-slate-50 shadow-none">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800">Recommended Places</CardTitle>
               </CardHeader>
               <CardContent>
               
               <Accordion type="multiple"  className="space-y-2">
-                <AccordionItem value="item-1" className="border-none shadow-md bg-white rounded-lg px-4">
+                <AccordionItem value="item-1" className="border-none shadow-md bg-white rounded-xl px-4">
                   <AccordionTrigger className="hover:no-underline">
                     <div >
                       <h2 className="font-medium text-lg">Nehru Kund</h2>
@@ -49,15 +49,15 @@ const Trip = () => {
                     Add what to do in detail and what to wear and bring here.
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="item-2" className="border-none shadow-md bg-white rounded-lg px-4">
+                <AccordionItem value="item-2" className="border-none shadow-md bg-white rounded-xl px-4">
                   <AccordionTrigger className="hover:no-underline">
                     <div >
-                      <h2 className="font-medium text-lg">Nehru Kund</h2>
+                      <h2 className="font-medium text-lg">Rohtang Pass</h2>
                       <p className="font-medium ml-1">
-                        Activity: Hiking Trail
+                        Activity: Scenic Lookout
                       </p>
                       <p className="font-medium ml-1">
-                        Duration: 3 Hours
+                        Duration: 2 Hours
                       </p>
                     </div>
                   </AccordionTrigger>
@@ -69,7 +69,7 @@ const Trip = () => {
 
               </CardContent>
             </Card>
-            <Card className="mt-3">
+            <Card className="mt-3 bg-slate-50 shadow-none">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl text-gray-800">Transportation</CardTitle>
               </CardHeader>
@@ -79,7 +79,7 @@ const Trip = () => {
               </CardContent>
             </Card>
             
-            <Card className="mt-3">
+            <Card className="mt-3 bg-slate-50 shadow-none">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl text-gray-800">Accomodation</CardTitle>
               </CardHeader>

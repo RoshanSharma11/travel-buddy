@@ -1,17 +1,27 @@
-import React from "react";
+'use client'
+
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import PlanCard from "@/components/PlanCard";
 import CodeDialog from "@/components/JoinGroupDialog";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Dashboard = () => {
+  const {isLoaded, user} = useUser()
+
+  if (!isLoaded) {
+    return <LoadingSpinner />
+  }
+  
   return (
     <div className="px-6 py-5">
       <div className="flex justify-between items-center w-full my-3">
         <h1 className="text-2xl font-medium text-gray-900">
           Welcome back,
-          <span className="text-primary-500"> Roshan</span>
+          <span className="text-primary-500"> {user?.fullName}</span>
         </h1>
         <div>
           <Link href="/new-trip">
@@ -30,10 +40,10 @@ const Dashboard = () => {
       <div className="grid grid-cols-2 gap-4">
         <PlanCard
           destination="Manali"
-          desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe fugiat atque corrupti nemo illo rerum quasi magni. Voluptatem cumque, eos laboriosam quia veniam sunt quasi veritatis recusandae dolorum labore minima."
-          from="17 Jan"
-          to="24 Jan"
-          members={["You", "Person 1", "Person 2", "Person 3"]}
+          desc="Manali is a high-altitude Himalayan resort town in India’s northern Himachal Pradesh state. It has a reputation as a backpacking center and honeymoon destination. Set on the Beas River, it’s a gateway for skiing in the Solang Valley and trekking in Parvati Valley"
+          from="17 Jan, 2024"
+          to="24 Jan, 2024"
+          members={["You", "Raj", "Dheeraj", "Armaan"]}
         />
       </div>
       <h2 className="mt-10 text-xl font-medium text-gray-900 mb-5">
@@ -41,10 +51,10 @@ const Dashboard = () => {
       </h2>
       <div className="grid grid-cols-2 gap-4">
         <PlanCard
-          destination="Manali"
-          desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe fugiat atque corrupti nemo illo rerum quasi magni. Voluptatem cumque, eos laboriosam quia veniam sunt quasi veritatis recusandae dolorum labore minima."
-          from="17 Jan"
-          to="24 Jan"
+          destination="Shilong"
+          desc="Shillong is a hill station in northeast India and capital of the state of Meghalaya. It’s known for the manicured gardens at Lady Hydari Park. Nearby, Ward’s Lake is surrounded by walking trails. North, the Don Bosco Centre for Indigenous Cultures features displays on the region’s native people."
+          from="17 Mar, 2023"
+          to="24 Mar, 2023"
           members={["You", "Person 1", "Person 2", "Person 3"]}
           previous={true}
         />

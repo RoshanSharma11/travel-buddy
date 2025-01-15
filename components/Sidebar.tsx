@@ -1,7 +1,8 @@
 "use client";
 
-import { useUser } from "@/hooks/useUser";
+// import { useUser } from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
+import { useClerk } from "@clerk/nextjs";
 import {
   Backpack,
   BookImage,
@@ -12,14 +13,25 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-const Sidebar = ({ sidebarHidden }: { sidebarHidden: boolean }) => {
-  const user = useUser();
+const Sidebar = ({ sidebarHidden=false }: { sidebarHidden: boolean }) => {
+  // const user = useUser();
+  const {signOut} = useClerk()
+
   const sidebarLinks = [
     { label: "Dashboard", route: "/dashboard", icon: LayoutDashboard },
-    { label: "Packages", route: "/packages", icon: Backpack },
-    { label: "Photos", route: "/photos", icon: BookImage },
+    { label: "Packages", route: "#", icon: Backpack },
+    { label: "Photos", route: "#", icon: BookImage },
     { label: "Settings", route: "/settings", icon: Settings },
   ];
+
+  const handleSignOut = async () => {
+    try {
+      await signOut({redirectUrl:"/"});
+      window.location.replace("/")
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -61,7 +73,7 @@ const Sidebar = ({ sidebarHidden }: { sidebarHidden: boolean }) => {
           </div>
           <button
             className="flex items-center gap-3 transition py-3 px-2 rounded-md cursor-pointer text-gray-800 hover:bg-primary-600 hover:text-white"
-            onClick={() => user?.logout()}
+            onClick={() => handleSignOut()}
           >
             <LogOut size={23} />
             <span className="font-medium text-lg ">Log Out</span>

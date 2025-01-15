@@ -2,7 +2,8 @@
 
 import LoadingSpinner from "@/components/LoadingSpinner";
 import NavBar from "@/components/NavBar";
-import { useUser } from "@/hooks/useUser";
+// import { useUser } from "@/hooks/useUser";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export default function Layout({
@@ -11,13 +12,14 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
 
-  const user = useUser()
+  // const user = useUser()
+  const {isLoaded, isSignedIn} = useUser()
 
-  if (user?.loading) {
+  if (!isLoaded) {
     return  <LoadingSpinner />
   }
 
-  if (user?.current) {
+  if (isLoaded && isSignedIn) {
     redirect('/dashboard')
   }
 

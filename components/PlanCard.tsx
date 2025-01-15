@@ -78,7 +78,7 @@ const PlanCard = ({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p>{desc}</p>
+        <p className="text-[15px]">{desc}</p>
       </CardContent>
       <CardFooter>
         <h2 className="font-medium">Members: </h2>
