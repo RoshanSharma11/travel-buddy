@@ -33,10 +33,9 @@ const Dashboard = () => {
   const [userData, setUserData] = useState<any>()
   
   useEffect(() => {
-    
     const init = async () => {
       try {
-        const a = await axiosClient.get("/user");
+        const a = await axiosClient.get("/user");   
         if (a.status === 200)
           setUserData(a.data)
         
