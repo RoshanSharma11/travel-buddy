@@ -4,7 +4,7 @@ import TripSidebarCard from "@/components/TripSidebarCard";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { SendHorizonal } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -17,9 +17,36 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useParams } from "next/navigation";
+import { useAxiosClient } from "@/lib/axios-client";
 
 
 const Trip = () => {
+  const {id: short_id} = useParams()
+  const [tripData, setTripsData] = useState()
+  const axiosClient = useAxiosClient();
+
+  
+ useEffect(() => {
+    const init = async () => {
+      try {
+        console.log(short_id);
+        
+        const response = await axiosClient.get(`/travel/${short_id}`);
+        console.log(response);
+        if (response.status === 200) {
+          setTripsData(response.data)
+        }
+        
+      } catch (e) {
+        console.log(e);
+        
+      }
+    }
+
+    init();
+  }, [])
+
   return (
     <>
       <div className="h-full flex p-4 gap-3">
@@ -101,7 +128,7 @@ const Trip = () => {
               </Button> */}
           </div>
         </div>
-        <TripSidebarCard />
+        <TripSidebarCard tripData={tripData} />
       </div>
     </>
   );

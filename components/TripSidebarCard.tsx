@@ -27,18 +27,7 @@ import { z } from "zod";
 import TripUpdateCard, { formSchema } from "./TripUpdateCard";
 import { copyCode } from "./PlanCard";
 
-// const formSchema = z.object({
-//   destination: z.string().min(2, {
-//     message: "Destination must be at least 2 characters.",
-//   }),
-//   activities: z.array(z.string()).optional(),
-//   budget: z.string().min(3, {
-//     message: "Budget must be at least be $100.",
-//   }),
-//   dateRange: z.object({ from: z.date(), to: z.date() }).optional(),
-// });
-
-const TripSidebarCard = () => {
+const TripSidebarCard = ({ tripData }: { tripData: any }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -57,17 +46,17 @@ const TripSidebarCard = () => {
               className="rounded-t-lg"
             />
             <div className="absolute bottom-3 left-6">
-              <h1 className="text-white text-2xl font-semibold">Manali</h1>
+              {/* <h1 className="text-white text-2xl font-semibold">{tripData.destination}</h1> */}
               <p className="text-white text-md font-medium flex items-center gap-1">
                 <MapPin size={18} />
-                Kullu, India
+                {/* {tripData.destination.split(',')[-1]}, India */}
               </p>
             </div>
             <button
               className="absolute top-2 right-1 p-2 text-white rounded-full hover:bg-primary-600 transition"
               onClick={(e) => {
                 e.stopPropagation();
-                copyCode("Hello!!");
+                copyCode(tripData.short_id);
               }}
             >
               <LinkIcon />
@@ -130,7 +119,15 @@ const TripSidebarCard = () => {
                 </AccordionTrigger>
 
                 <AccordionContent>
-                  <Accordion type="single" collapsible className="space-y-2">
+                  <ul className="space-y-3">
+                    <li className="flex items-center font-medium bg-white px-3 py-4 text-md rounded-lg">
+                      User 1
+                    </li>
+                    <li className="flex items-center font-medium bg-white px-3 py-4 text-md rounded-lg">
+                      User 2
+                    </li>
+                  </ul>
+                  {/* <Accordion type="single" collapsible className="space-y-2">
                     <AccordionItem
                       value="item-1"
                       className="px-3 py-1 bg-white border-0 rounded-lg"
@@ -183,7 +180,7 @@ const TripSidebarCard = () => {
                         </ul>
                       </AccordionContent>
                     </AccordionItem>
-                  </Accordion>
+                  </Accordion> */}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -227,14 +224,18 @@ const TripSidebarCard = () => {
                         </DialogHeader>
                         <TripUpdateCard
                           destination="Manali"
-                          budget={'2500'}
+                          budget={"2500"}
                           from={new Date("18 Jan 2025")}
                           to={new Date("25 Feb 2025")}
-                          activities={['Skiing','Hiking','Trekking','Street Food Exploration']}
+                          activities={[
+                            "Skiing",
+                            "Hiking",
+                            "Trekking",
+                            "Street Food Exploration",
+                          ]}
                           buttonText="Update"
-                          name="XYZ"
                           onSubmit={onSubmit}
-                          />
+                        />
                       </DialogContent>
                     </Dialog>
                   </ul>

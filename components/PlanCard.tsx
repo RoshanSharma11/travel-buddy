@@ -20,7 +20,7 @@ interface PlanCardProps {
   from: string;
   to: string;
   desc: string;
-  members: string[];
+  members: any[];
   previous?: boolean;
   short_id:string;
 }
@@ -58,7 +58,7 @@ const PlanCard = ({
       <CardHeader>
         <CardTitle className="text-xl relative">
           <Link
-            href={`/trips/${destination}`}
+            href={`/trips/${short_id}`}
             className="hover:text-primary-600 transition"
           >
             Trip to {destination}
@@ -90,7 +90,7 @@ const PlanCard = ({
           {members.map((member, index) => (
             <li key={index}>
               <Badge className="bg-primary-600 hover:bg-primary-500">
-                {member}
+                {member.name}
               </Badge>
             </li>
           ))}
