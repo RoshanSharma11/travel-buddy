@@ -3,7 +3,7 @@ import React from "react";
 
 const LoadingSpinner = ({ className }: { className?: string }) => {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div className="h-full w-full flex items-center justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="40"

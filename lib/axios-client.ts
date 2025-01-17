@@ -5,7 +5,7 @@ import { useAuth } from "@clerk/nextjs";
 const axiosClient = axios.create({
   baseURL: "https://gpl-project.onrender.com/api/v1", 
   // baseURL: "http://127.0.0.1:8000/api/v1", 
-  timeout: 10000, 
+  // timeout: 10000, 
 });
 
 export const useAxiosClient = () => {
@@ -15,7 +15,7 @@ export const useAxiosClient = () => {
     async (config: any) => {
       try {
         const token = await getToken();
-        console.log(token);
+        // console.log(token);
         
         
         if (token) {

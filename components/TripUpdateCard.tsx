@@ -75,6 +75,7 @@ const TripUpdateCard = ({
       destination: destination || "",
       budget: budget || '100',
       activities: activities || [],
+      dateRange: {from:from, to: to}
     },
   });
   const today = new Date();

@@ -19,21 +19,24 @@ import {
 } from "@/components/ui/accordion"
 import { useParams } from "next/navigation";
 import { useAxiosClient } from "@/lib/axios-client";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 
 const Trip = () => {
   const {id: short_id} = useParams()
   const [tripData, setTripsData] = useState()
+  const [userData, setUserData] = useState()
   const axiosClient = useAxiosClient();
 
   
  useEffect(() => {
     const init = async () => {
       try {
-        console.log(short_id);
-        
+        const userRes = await axiosClient.get("/user");   
+        if (userRes.status === 200)
+          setUserData(userRes.data)
+
         const response = await axiosClient.get(`/travel/${short_id}`);
-        console.log(response);
         if (response.status === 200) {
           setTripsData(response.data)
         }
@@ -46,6 +49,11 @@ const Trip = () => {
 
     init();
   }, [])
+
+
+  if (!tripData || !userData) {
+    return <LoadingSpinner />
+  }
 
   return (
     <>
@@ -128,7 +136,7 @@ const Trip = () => {
               </Button> */}
           </div>
         </div>
-        <TripSidebarCard tripData={tripData} />
+        <TripSidebarCard userData={userData} short_id={short_id || ""} setTripsData={setTripsData} tripData={tripData} />
       </div>
     </>
   );

@@ -27,10 +27,11 @@ interface TripDataType {
 
 
 const Dashboard = () => {
-  const {isLoaded, user} = useUser()
+  const [isLoaded, setIsLoaded] = useState(false)
   const axiosClient = useAxiosClient();
   const [tripsData, setTripsData] = useState<TripDataType[] | null>(null)
   const [userData, setUserData] = useState<any>()
+  const currentDate = new Date(Date.now())
   
   useEffect(() => {
     const init = async () => {
@@ -40,7 +41,6 @@ const Dashboard = () => {
           setUserData(a.data)
         
         const response = await axiosClient.get("/travel");
-        console.log(response);
         if (response.status === 200) {
           setTripsData(response.data)
         } else {
@@ -49,15 +49,21 @@ const Dashboard = () => {
         
       } catch (e) {
         console.log(e);
-        
+        // setTripsData([])
+      } finally {
+        setIsLoaded(true)
       }
     }
 
     init();
   }, [])
  
-  if (!isLoaded || !tripsData || !userData) {
+  if (!isLoaded) {
     return <LoadingSpinner />
+  }
+
+  if (isLoaded && (!tripsData || !userData)) {
+    return <div>Something went wrong</div>
   }
   
   return (
@@ -83,7 +89,7 @@ const Dashboard = () => {
       </h2>
       <div className="grid grid-cols-2 gap-4">
         {
-          tripsData.map((trip:any, ind) => {
+          tripsData!.map((trip:any, ind) => {
             return <PlanCard
             key={ind}
             destination={trip.destination}
@@ -92,6 +98,7 @@ const Dashboard = () => {
             to={trip.end_date}
             members={[trip.created_by, ...trip.members]}
             short_id={trip.short_id}
+            previous={currentDate > new Date(trip.end_date)}
           />
           })
           
